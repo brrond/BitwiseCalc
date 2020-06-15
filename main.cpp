@@ -5,8 +5,9 @@
 
 #include <iostream>
 #include <cstring>
+#include <algorithm>
 
-#include "dataclass.h"
+#include "bitwisecalchandler.h"
 
 enum PROGRAM_MODE_TYPE {
     CONSOLE = 0,
@@ -61,16 +62,17 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    BitwiseCalcHandler handler;
+
     // CONSOLE MODE
     if(PROGRAM_MODE == CONSOLE) {
         std::string input;
         do{
-            cout << "BitwiseCalc > "; cin >> input;
-            cout << "TEST" << endl;
-            DataClass a;
-            a.set(10, BIN);
-            getchar();
-        } while(0);//while(input != "quit");
+            cout << "BitwiseCalc > "; std::getline(cin, input);
+            auto ret = handler.execute(QString::fromStdString(input));
+            std::for_each(ret.begin(), ret.end(), [](QString& str){cout << str.toStdString() << endl;});
+
+        } while(input != "quit");
         return 0;
     }
 
