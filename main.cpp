@@ -67,8 +67,10 @@ int main(int argc, char *argv[])
     // CONSOLE MODE
     if(PROGRAM_MODE == CONSOLE) {
         std::string input;
+        char *inp = new char[100];
         do{
-            cout << "BitwiseCalc > "; std::getline(cin, input);
+            cout << "BitwiseCalc > "; cin.getline(inp, 100);//std::getline(cin, input);
+            input = std::string(inp);
             auto ret = handler.execute(QString::fromStdString(input));
             std::for_each(ret.begin(), ret.end(), [](QString& str){cout << str.toStdString() << endl;});
 
