@@ -64,10 +64,6 @@ int main(int argc, char *argv[])
 
     BitwiseCalcHandler handler;
 
-    //
-    PROGRAM_MODE = GUI;
-    //
-
     // CONSOLE MODE
     if(PROGRAM_MODE == CONSOLE) {
         std::string input;
