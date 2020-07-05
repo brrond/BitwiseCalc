@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     else if(argc == 2) {
         // BitwiseCalc --help (console)
         // BitwiseCalc --GUI  (gui)
-        if(argv[1] == "--GUI") {
+        if(std::strcmp(argv[1], "--GUI") == 0) {
             PROGRAM_MODE = GUI;
         }
         else {
