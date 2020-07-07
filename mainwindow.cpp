@@ -133,3 +133,27 @@ void MainWindow::on_BQWord_clicked()
 void MainWindow::on_listWidget_clicked(const QModelIndex &index) {
     ui->statusbar->showMessage(ui->listWidget->item(index.row())->text());
 }
+
+void MainWindow::on_BByte_2_clicked()
+{
+    type = "ub";
+    print_command();
+}
+
+void MainWindow::on_BWord_2_clicked()
+{
+    type = "uw";
+    print_command();
+}
+
+void MainWindow::on_BDWord_2_clicked()
+{
+    type = "ud";
+    print_command();
+}
+
+void MainWindow::on_BQWord_2_clicked()
+{
+    type = "uq";
+    print_command();
+}

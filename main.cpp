@@ -66,19 +66,27 @@ int main(int argc, char *argv[])
 
     // CONSOLE MODE
     if(PROGRAM_MODE == CONSOLE) {
-        std::string input;
         char *inp = new char[100];
         do{
             cout << "BitwiseCalc > "; cin.getline(inp, 100);//std::getline(cin, input);
-            input = std::string(inp);
-            auto ret = handler.execute(QString::fromStdString(input));
+            QString input(inp);
+            auto ret = handler.execute(input);
             std::for_each(ret.begin(), ret.end(), [](QString& str){cout << str.toStdString() << endl;});
 
-        } while(input != "quit");
+            input = input.toLower();
+            if(input == "exit" || input == "quit"){
+                break;
+            }
+            else if(input == "gui"){
+                goto GUI;
+            }
+
+        } while(true);
         return 0;
     }
 
     // GUI
+    GUI:
     QApplication a(argc, argv);
     MainWindow w(&handler);
     w.show();

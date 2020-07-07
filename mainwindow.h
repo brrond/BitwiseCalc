@@ -40,6 +40,14 @@ private slots:
 
     void on_listWidget_clicked(const QModelIndex &index);
 
+    void on_BByte_2_clicked();
+
+    void on_BWord_2_clicked();
+
+    void on_BDWord_2_clicked();
+
+    void on_BQWord_2_clicked();
+
 private:
     void print_command();
 

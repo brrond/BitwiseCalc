@@ -20,6 +20,7 @@ QStringList BitwiseCalcHandler::execute(QString command) {
         ret.push_back("sub {BIN/OCT/DEC/HEX} [number]\t\t\t-\t\tsubtract number of current cell");
         ret.push_back("mul {BIN/OCT/DEC/HEX} [number]\t\t\t-\t\tmultiply number of current cell");
         ret.push_back("div {BIN/OCT/DEC/HEX} [number]\t\t\t-\t\tdivide number of current cell");
+        ret.push_back("gui \t\t\t\t\t\t-\t\tgo to GUI mode");
         ret.push_back("That's all");
     }
     else if(argv[0] == "set" && argv.size() == 3) {
@@ -49,15 +50,15 @@ QStringList BitwiseCalcHandler::execute(QString command) {
             b = HEX;
 
         if(argv[2] == "ub")
-            n = QString::number( (DATA[index].number.toInt(nullptr, DATA[index].base) & 127), b);
+            n = QString::number( (DATA[index].number.toInt(nullptr, DATA[index].base) & 255), b);
         else if(argv[2] == "b")
             n = QString::number((int)(char)DATA[index].number.toInt(nullptr, DATA[index].base), b);
         else if(argv[2] == "uw")
-            n = QString::number( (DATA[index].number.toInt(nullptr, DATA[index].base) & 32767), b);
+            n = QString::number( (DATA[index].number.toInt(nullptr, DATA[index].base) & 65535), b);
         else if(argv[2] == "w")
             n = QString::number(DATA[index].number.toShort(nullptr, DATA[index].base), b);
         else if(argv[2] == "ud") {
-            n = QString::number( (DATA[index].number.toInt(nullptr, DATA[index].base) & 2147483647), b);
+            n = QString::number( (DATA[index].number.toInt(nullptr, DATA[index].base) & 4294967295), b);
         }
         else if(argv[2] == "d")
             n = QString::number(DATA[index].number.toInt(nullptr, DATA[index].base), b);
@@ -86,42 +87,60 @@ QStringList BitwiseCalcHandler::execute(QString command) {
             QString str = QString::number(i);
             str.push_back('\t');
             if(argv[1] == "ub") {
-                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 127), 2); str.push_back('\t');
-                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 127), 8); str.push_back('\t');
-                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 127), 10); str.push_back('\t');
-                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 127), 16); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 255), 2); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 255), 8); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 255), 10); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 255), 16); str.push_back('\t');
             }
             else if(argv[1] == "b") {
-                str += QString::number((int)(char)DATA[i].number.toInt(nullptr, DATA[i].base), 2); str.push_back('\t');
-                str += QString::number((int)(char)DATA[i].number.toInt(nullptr, DATA[i].base), 8); str.push_back('\t');
+                auto tmp = QString::number((int)(char)DATA[i].number.toInt(nullptr, DATA[i].base), 2);
+                tmp.remove(0, 56);
+                str += tmp; str.push_back('\t');
+                tmp = QString::number((int)(char)DATA[i].number.toInt(nullptr, DATA[i].base), 8);
+                tmp.remove(1, 20); // problem here !!!!!!!!!!!!1
+                str += tmp; str.push_back('\t');
                 str += QString::number((int)(char)DATA[i].number.toInt(nullptr, DATA[i].base), 10); str.push_back('\t');
-                str += QString::number((int)(char)DATA[i].number.toInt(nullptr, DATA[i].base), 16); str.push_back('\t');
+                tmp = QString::number((int)(char)DATA[i].number.toInt(nullptr, DATA[i].base), 16);
+                tmp.remove(0, 14);
+                str += tmp; str.push_back('\t');
             }
             else if(argv[1] == "uw") {
-                str += QString::number( (DATA[i].number.toShort(nullptr, DATA[i].base) & 32767), 2); str.push_back('\t');
-                str += QString::number( (DATA[i].number.toShort(nullptr, DATA[i].base) & 32767), 8); str.push_back('\t');
-                str += QString::number( (DATA[i].number.toShort(nullptr, DATA[i].base) & 32767), 10); str.push_back('\t');
-                str += QString::number( (DATA[i].number.toShort(nullptr, DATA[i].base) & 32767), 16); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toShort(nullptr, DATA[i].base) & 65535), 2); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toShort(nullptr, DATA[i].base) & 65535), 8); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toShort(nullptr, DATA[i].base) & 65535), 10); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toShort(nullptr, DATA[i].base) & 65535), 16); str.push_back('\t');
             }
             else if(argv[1] == "w") {
-                str += QString::number(DATA[i].number.toShort(nullptr, DATA[i].base), 2); str.push_back('\t');
-                str += QString::number(DATA[i].number.toShort(nullptr, DATA[i].base), 8); str.push_back('\t');
+                auto tmp = QString::number(DATA[i].number.toShort(nullptr, DATA[i].base), 2);
+                tmp.remove(0, 48);
+                str += tmp; str.push_back('\t');
+                tmp = QString::number(DATA[i].number.toShort(nullptr, DATA[i].base), 8);
+                tmp.remove(1, 17);
+                str += tmp; str.push_back('\t');
                 str += QString::number(DATA[i].number.toShort(nullptr, DATA[i].base), 10); str.push_back('\t');
-                str += QString::number(DATA[i].number.toShort(nullptr, DATA[i].base), 16); str.push_back('\t');
+                tmp = QString::number(DATA[i].number.toShort(nullptr, DATA[i].base), 16);
+                tmp.remove(0, 12);
+                str += tmp; str.push_back('\t');
             }
             else if(argv[1] == "ud") {
-                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 2147483647), 2); str.push_back('\t');
-                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 2147483647), 8); str.push_back('\t');
-                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 2147483647), 10); str.push_back('\t');
-                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 2147483647), 16); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 4294967295), 2); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 4294967295), 8); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 4294967295), 10); str.push_back('\t');
+                str += QString::number( (DATA[i].number.toInt(nullptr, DATA[i].base) & 4294967295), 16); str.push_back('\t');
             }
             else if(argv[1] == "d") {
-                str += QString::number(DATA[i].number.toInt(nullptr, DATA[i].base), 2); str.push_back('\t');
-                str += QString::number(DATA[i].number.toInt(nullptr, DATA[i].base), 8); str.push_back('\t');
+                auto tmp = QString::number(DATA[i].number.toInt(nullptr, DATA[i].base), 2);
+                tmp.remove(0, 32);
+                str += tmp; str.push_back('\t');
+                tmp = QString::number(DATA[i].number.toInt(nullptr, DATA[i].base), 8);
+                tmp.remove(1, 11);
+                str += tmp; str.push_back('\t');
                 str += QString::number(DATA[i].number.toInt(nullptr, DATA[i].base), 10); str.push_back('\t');
-                str += QString::number(DATA[i].number.toInt(nullptr, DATA[i].base), 16); str.push_back('\t');
+                tmp = QString::number(DATA[i].number.toInt(nullptr, DATA[i].base), 16);
+                tmp.remove(0, 8);
+                str += tmp; str.push_back('\t');
             }
-            else if(argv[1] == "uq") {
+            else if(argv[1] == "uq") {// I think some troub. here
                 str += QString::number( (DATA[i].number.toLongLong(nullptr, DATA[i].base) & 9223372036854775807), 2); str.push_back('\t');
                 str += QString::number( (DATA[i].number.toLongLong(nullptr, DATA[i].base) & 9223372036854775807), 8); str.push_back('\t');
                 str += QString::number( (DATA[i].number.toLongLong(nullptr, DATA[i].base) & 9223372036854775807), 10); str.push_back('\t');
@@ -225,7 +244,7 @@ QStringList BitwiseCalcHandler::execute(QString command) {
         str += QString::number(DATA[index].number.toLongLong(nullptr, DATA[index].base), 16); str.push_back('\t');
         ret.push_back(str);
     }
-    else if(argv[0] == "quit"){
+    else if(argv[0] == "quit" || argv[0] == "exit" || argv[0] == "gui"){
 
     }
     else {
