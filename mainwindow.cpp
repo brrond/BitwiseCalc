@@ -157,3 +157,8 @@ void MainWindow::on_BQWord_2_clicked()
     type = "uq";
     print_command();
 }
+
+void MainWindow::on_BBin_3_clicked()
+{
+
+}

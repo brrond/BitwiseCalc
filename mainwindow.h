@@ -48,6 +48,8 @@ private slots:
 
     void on_BQWord_2_clicked();
 
+    void on_BBin_3_clicked();
+
 private:
     void print_command();
 
