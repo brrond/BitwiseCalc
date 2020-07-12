@@ -18,13 +18,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_BBin_2_clicked();
-
-    void on_BOct_2_clicked();
-
-    void on_BDec_2_clicked();
-
-    void on_BHex_2_clicked();
 
     void on_BNext_clicked();
 
@@ -48,7 +41,15 @@ private slots:
 
     void on_BQWord_2_clicked();
 
-    void on_BBin_3_clicked();
+    void on_BSet_clicked();
+
+    void on_BAdd_clicked();
+
+    void on_BSub_clicked();
+
+    void on_BMul_clicked();
+
+    void on_BDiv_clicked();
 
 private:
     void print_command();

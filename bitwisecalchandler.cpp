@@ -94,14 +94,14 @@ QStringList BitwiseCalcHandler::execute(QString command) {
             }
             else if(argv[1] == "b") {
                 auto tmp = QString::number((int)(char)DATA[i].number.toInt(nullptr, DATA[i].base), 2);
-                tmp.remove(0, 56);
+                if(tmp.size() > 56) tmp.remove(0, 56);
                 str += tmp; str.push_back('\t');
                 tmp = QString::number((int)(char)DATA[i].number.toInt(nullptr, DATA[i].base), 8);
-                tmp.remove(1, 20); // problem here !!!!!!!!!!!!1
+                if(tmp.size() > 20) tmp.remove(1, 20); // problem here !!!!!!!!!!!!1
                 str += tmp; str.push_back('\t');
                 str += QString::number((int)(char)DATA[i].number.toInt(nullptr, DATA[i].base), 10); str.push_back('\t');
                 tmp = QString::number((int)(char)DATA[i].number.toInt(nullptr, DATA[i].base), 16);
-                tmp.remove(0, 14);
+                if(tmp.size() > 14) tmp.remove(0, 14);
                 str += tmp; str.push_back('\t');
             }
             else if(argv[1] == "uw") {
@@ -112,14 +112,14 @@ QStringList BitwiseCalcHandler::execute(QString command) {
             }
             else if(argv[1] == "w") {
                 auto tmp = QString::number(DATA[i].number.toShort(nullptr, DATA[i].base), 2);
-                tmp.remove(0, 48);
+                if(tmp.size() > 48) tmp.remove(0, 48);
                 str += tmp; str.push_back('\t');
                 tmp = QString::number(DATA[i].number.toShort(nullptr, DATA[i].base), 8);
-                tmp.remove(1, 17);
+                if(tmp.size() > 17) tmp.remove(1, 17);
                 str += tmp; str.push_back('\t');
                 str += QString::number(DATA[i].number.toShort(nullptr, DATA[i].base), 10); str.push_back('\t');
                 tmp = QString::number(DATA[i].number.toShort(nullptr, DATA[i].base), 16);
-                tmp.remove(0, 12);
+                if(tmp.size() > 12) tmp.remove(0, 12);
                 str += tmp; str.push_back('\t');
             }
             else if(argv[1] == "ud") {
@@ -130,14 +130,14 @@ QStringList BitwiseCalcHandler::execute(QString command) {
             }
             else if(argv[1] == "d") {
                 auto tmp = QString::number(DATA[i].number.toInt(nullptr, DATA[i].base), 2);
-                tmp.remove(0, 32);
+                if(tmp.size() > 32) tmp.remove(0, 32);
                 str += tmp; str.push_back('\t');
                 tmp = QString::number(DATA[i].number.toInt(nullptr, DATA[i].base), 8);
-                tmp.remove(1, 11);
+                if(tmp.size() > 11) tmp.remove(1, 11);
                 str += tmp; str.push_back('\t');
                 str += QString::number(DATA[i].number.toInt(nullptr, DATA[i].base), 10); str.push_back('\t');
                 tmp = QString::number(DATA[i].number.toInt(nullptr, DATA[i].base), 16);
-                tmp.remove(0, 8);
+                if(tmp.size() > 8) tmp.remove(0, 8);
                 str += tmp; str.push_back('\t');
             }
             else if(argv[1] == "uq") {// I think some troub. here

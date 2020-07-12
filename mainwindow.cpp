@@ -14,51 +14,6 @@ MainWindow::~MainWindow() {
 }
 
 
-void MainWindow::on_BBin_2_clicked() {
-    auto res = handler->execute("bin " + ui->lineEdit->text());
-    auto proc_res = res[1].split("\t");
-    ui->EBin->setText(proc_res[0]);
-    ui->EOct->setText(proc_res[1]);
-    ui->EDec->setText(proc_res[2]);
-    ui->EHex->setText(proc_res[3]);
-
-    print_command();
-}
-
-void MainWindow::on_BOct_2_clicked() {
-    auto res = handler->execute("oct " + ui->lineEdit->text());
-    auto proc_res = res[1].split("\t");
-    ui->EBin->setText(proc_res[0]);
-    ui->EOct->setText(proc_res[1]);
-    ui->EDec->setText(proc_res[2]);
-    ui->EHex->setText(proc_res[3]);
-
-    print_command();
-}
-
-void MainWindow::on_BDec_2_clicked() {
-    auto res = handler->execute("dec " + ui->lineEdit->text());
-    auto proc_res = res[1].split("\t");
-    ui->EBin->setText(proc_res[0]);
-    ui->EOct->setText(proc_res[1]);
-    ui->EDec->setText(proc_res[2]);
-    ui->EHex->setText(proc_res[3]);
-
-    print_command();
-}
-
-void MainWindow::on_BHex_2_clicked() {
-    auto res = handler->execute("hex " + ui->lineEdit->text());
-    auto proc_res = res[1].split("\t");
-    ui->EBin->setText(proc_res[0]);
-    ui->EOct->setText(proc_res[1]);
-    ui->EDec->setText(proc_res[2]);
-    ui->EHex->setText(proc_res[3]);
-
-    print_command();
-
-}
-
 void MainWindow::on_BNext_clicked() {
     auto t = handler->execute("next")[0].split(" : ");
     if(t.size() == 1){
@@ -158,7 +113,138 @@ void MainWindow::on_BQWord_2_clicked()
     print_command();
 }
 
-void MainWindow::on_BBin_3_clicked()
-{
 
+void MainWindow::on_BSet_clicked()
+{
+    QString command;
+
+    if(ui->radioButton->isChecked()){
+        command = "bin ";
+    }
+    else if(ui->radioButton_2->isChecked()){
+        command = "oct ";
+    }
+    else if(ui->radioButton_3->isChecked()){
+        command = "dec ";
+    }
+    else{
+        command = "hex ";
+    }
+
+    auto res = handler->execute(command + ui->lineEdit->text());
+    auto proc_res = res[1].split("\t");
+    ui->EBin->setText(proc_res[0]);
+    ui->EOct->setText(proc_res[1]);
+    ui->EDec->setText(proc_res[2]);
+    ui->EHex->setText(proc_res[3]);
+
+    print_command();
+}
+
+void MainWindow::on_BAdd_clicked()
+{
+    QString command;
+
+    if(ui->radioButton->isChecked()){
+        command = "bin ";
+    }
+    else if(ui->radioButton_2->isChecked()){
+        command = "oct ";
+    }
+    else if(ui->radioButton_3->isChecked()){
+        command = "dec ";
+    }
+    else{
+        command = "hex ";
+    }
+
+    handler->execute("add " + command + ui->lineEdit->text());
+
+    ui->EBin->setText(handler->execute("get bin d")[0]);
+    ui->EOct->setText(handler->execute("get oct d")[0]);
+    ui->EDec->setText(handler->execute("get dec d")[0]);
+    ui->EHex->setText(handler->execute("get hex d")[0]);
+
+    print_command();
+}
+
+void MainWindow::on_BSub_clicked()
+{
+    QString command;
+
+    if(ui->radioButton->isChecked()){
+        command = "bin ";
+    }
+    else if(ui->radioButton_2->isChecked()){
+        command = "oct ";
+    }
+    else if(ui->radioButton_3->isChecked()){
+        command = "dec ";
+    }
+    else{
+        command = "hex ";
+    }
+
+    handler->execute("sub " + command + ui->lineEdit->text());
+
+    ui->EBin->setText(handler->execute("get bin d")[0]);
+    ui->EOct->setText(handler->execute("get oct d")[0]);
+    ui->EDec->setText(handler->execute("get dec d")[0]);
+    ui->EHex->setText(handler->execute("get hex d")[0]);
+
+    print_command();
+}
+
+void MainWindow::on_BMul_clicked()
+{
+    QString command;
+
+    if(ui->radioButton->isChecked()){
+        command = "bin ";
+    }
+    else if(ui->radioButton_2->isChecked()){
+        command = "oct ";
+    }
+    else if(ui->radioButton_3->isChecked()){
+        command = "dec ";
+    }
+    else{
+        command = "hex ";
+    }
+
+    handler->execute("mul " + command + ui->lineEdit->text());
+
+    ui->EBin->setText(handler->execute("get bin d")[0]);
+    ui->EOct->setText(handler->execute("get oct d")[0]);
+    ui->EDec->setText(handler->execute("get dec d")[0]);
+    ui->EHex->setText(handler->execute("get hex d")[0]);
+
+    print_command();
+}
+
+void MainWindow::on_BDiv_clicked()
+{
+    QString command;
+
+    if(ui->radioButton->isChecked()){
+        command = "bin ";
+    }
+    else if(ui->radioButton_2->isChecked()){
+        command = "oct ";
+    }
+    else if(ui->radioButton_3->isChecked()){
+        command = "dec ";
+    }
+    else{
+        command = "hex ";
+    }
+
+    handler->execute("div " + command + ui->lineEdit->text());
+
+    ui->EBin->setText(handler->execute("get bin d")[0]);
+    ui->EOct->setText(handler->execute("get oct d")[0]);
+    ui->EDec->setText(handler->execute("get dec d")[0]);
+    ui->EHex->setText(handler->execute("get hex d")[0]);
+
+    print_command();
 }
